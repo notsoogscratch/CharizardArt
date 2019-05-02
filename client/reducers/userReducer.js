@@ -10,6 +10,8 @@ const initialState = {
   needsToSignup: false,
   userCreated: false,
   artRecieved: false,
+  art: null,
+  chartArr: [],
   art: [],
   goToChat: false,
   currMsg: "What do you have to say?",
@@ -113,6 +115,16 @@ const userReducer = (state = initialState, action) => {
         ...state,
       };
     
+    case types.GET_STATS:
+    let newChartArr = [];
+    //this is where you'll map over the data and save only the things you want to state;
+      newchartArr.push(action.payload.data, ...state)
+        return {
+          ...state,
+          chartArr: newChartArr,
+
+        };
+
     case types.CHAT:
       newGoToChat = action.payload;
       return {
