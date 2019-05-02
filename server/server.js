@@ -33,6 +33,27 @@ app.use(
 )
 app.use(passport.initialize());
 app.use(passport.session());
+//socket.io  --- copied from https://www.npmjs.com/package/socket.io
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+// io.listen(server);
+io.sockets.on('connection', (socket) => {
+  let msgArr = []
+  // console.log('this is the socket', socket);
+  console.log('connection made');
+  socket.send('sup');
+  socket.on('message', (data) => {
+    console.log(data);
+    // append data to msgArr
+    // socket.emit("sendMsgArrToClient", msgArr)
+  });
+  socket.emit('event', 'sup again or something')
+  //on emit 1st paraemter is what event is called (string) & second paramter is the data being sent
+});
+server.listen(PORT);
+
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,6 +65,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use('/build', express.static(path.join(__dirname, '../build')));
+
 //testing for google signin 
 
 app.get(
@@ -54,7 +77,7 @@ app.get(
 );
 
 app.get(
-  '/Home',
+  '/auth/google/callback',
   passport.authenticate('google')
 )
 
@@ -66,6 +89,8 @@ app.get('/api/logout', (req, res) => {
   req.logout();
   res.send(req.user);
 })
+
+//////////
 
 
 app.get('/api/getallart/', testQueryController.getAllArt, (req, res) => {
@@ -128,4 +153,4 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'))
 });
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

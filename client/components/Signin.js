@@ -55,7 +55,7 @@ class Signin extends Component {
   click() {
     Axios.get('/api/current_user/')
       .then(res => {
-        // console.log('google id --->', res.data.googleID);
+        console.log('google id --->', res.data.googleID);
         if (res.data.googleID) {
           this.props.googleLogin(res.data.googleID);
         }
@@ -78,15 +78,16 @@ class Signin extends Component {
     return (
       <div>
         <h3>Please Login</h3>
-        <label for="loginUsername">Username</label>
+        <label htmlFor="loginUsername">Username</label>
         <input type="text" onChange={(e) => this.props.loginUsername(e)} id="username" placeholder="username"></input>
-        <label for="loginPassword">Password</label>
+        <label htmlFor="loginPassword">Password</label>
         <input type="password" onChange={(e) => this.props.loginPassword(e)} id="password" placeholder="password"></input>
         <button onClick={(e) => { e.preventDefault(); this.props.verifyLogin(this.props.username, this.props.password) }}>Login</button>
         <br></br>
         <br></br>
         <button onClick={(e) => { e.preventDefault(); this.props.signup() }}>Signup</button>
         <button onClick={this.click}>Sign In to Google</button>
+        <a href="/auth/google">Sign In With GERGLE</a>
       </div >
     )
   }
