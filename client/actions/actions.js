@@ -175,3 +175,20 @@ export const getStats = () => {
     })
 } 
 }
+//This action creator is deployed when a user clicks the button chat (go to component Chat)
+export const chat = () => ({
+  type: types.CHAT,
+  payload: true
+});
+
+//After filling out a chat form and hitting the submit button
+export const sendMessage = (currentMessage) => ({
+  type: types.MSG_ARR,
+  payload: currentMessage
+})
+
+//After filling out a chat form and hitting the submit button
+export const newCurrMsg = (messageText) => ({
+  type: types.CURR_MSG,
+  payload: messageText
+})

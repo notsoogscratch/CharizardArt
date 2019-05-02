@@ -1,4 +1,6 @@
 import * as types from '../constants/actionTypes';
+import io from 'socket.io-client';
+
 
 const initialState = {
   username: null,
@@ -10,6 +12,11 @@ const initialState = {
   artRecieved: false,
   art: null,
   chartArr: [],
+  art: [],
+  goToChat: false,
+  currMsg: "What do you have to say?",
+  msgsArr: ['Welcome!'],
+  socket: io(),
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,6 +29,8 @@ const userReducer = (state = initialState, action) => {
   let newUserCreated;
   let newArtRecieved;
   let newArt;
+  let newGoToChat;
+  let newCurrMsg;
 
   switch (action.type) {
     //If you watch STATE in Redux devTools, you will see it update everytime a user types a letter
@@ -82,23 +91,23 @@ const userReducer = (state = initialState, action) => {
       newArt = action.payload.payload;
       //console.log('this is newArt ', newArt)
       //We actually do the below mapping in component HOME, this code below may be unneccessary 
-      const newArtParsed = newArt.map(el => {
-        return (
-          <div className="artUnit">
-            <img src={el.image} style={{ height: 100 }}></img>
-            <p className="unitTitle">{el.title}</p>
-            <p>Artist: {el.artist}</p>
-            <p>Description: {el.description}</p>
-            <p>Material: {el.material}</p>
-            <p>Price: {el.price}</p>
-          </div>
-        )
-      })
+      // const newArtParsed = newArt.map(el => {
+      //   return (
+      //     <div className="artUnit">
+      //       <img src={el.image} style={{ height: 100 }}></img>
+      //       <p className="unitTitle">{el.title}</p>
+      //       <p>Artist: {el.artist}</p>
+      //       <p>Description: {el.description}</p>
+      //       <p>Material: {el.material}</p>
+      //       <p>Price: {el.price}</p>
+      //     </div>
+      //   )
+      // })
 
       return {
         ...state,
         artRecieved: newArtRecieved,
-        art: newArtParsed,
+        art: newArt,
       };
 
     case types.POST_GET_ART_FAILURE:
@@ -116,6 +125,33 @@ const userReducer = (state = initialState, action) => {
 
         };
 
+    case types.CHAT:
+      newGoToChat = action.payload;
+      return {
+        ...state,
+        goToChat: newGoToChat,
+      };
+
+    case types.CURR_MSG:
+      console.log('in curr msg ', action.payload.value)
+      newCurrMsg = action.payload.value;
+      return {
+        ...state,
+        currMsg: newCurrMsg
+      }
+
+    case types.MSG_ARR:
+      console.log('in msg arr without value', action.payload)
+      console.log('in msg arr with value', action.payload.value)
+      let newMsg = action.payload;
+      let newMsgArr = state.msgsArr.slice(0);
+      newMsgArr.push(newMsg);
+      let restartMsg = '';
+      return {
+        ...state,
+        currMsg: restartMsg,
+        msgsArr: newMsgArr,
+      }
 
     default:
       return state;

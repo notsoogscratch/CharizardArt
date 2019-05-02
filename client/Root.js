@@ -6,9 +6,10 @@ import Main from './containers/MainContainer';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Chart from './components/Chart'
+import Chat from './components/Chat'
 import store from './store';
 
-// require('./styles.css'); - we just have not used any styling
+require('./styles.css')
 
 //IMPORTANT - any new components added that will be displayed upon rerouting, must make route here first. Follow pattern below. 
 const Root = ({ store }) => (
@@ -19,6 +20,7 @@ const Root = ({ store }) => (
             <Route path='/home' component={Home} />
             <Route path='/signup' component={Signup} />
             <Route path='/stats' component={Chart} />
+            <Route path='/chat' component={Chat} />
         </Router>
     </Provider>
 )
