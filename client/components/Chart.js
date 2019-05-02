@@ -26,4 +26,4 @@ class Chart extends Component {
 
 
 
-export default connect(mapStateToProps, mapDispatchtoProps)(Chart) 
+export default connect(mapStateToProps, mapDispatchToProps)(Chart) 

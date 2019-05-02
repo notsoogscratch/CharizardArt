@@ -65,7 +65,7 @@ class Home extends Component {
 
     return (
       <div>
-        <button className="chat" onClick={(e) => { e.preventDefault(); this.props.chat()}}>Go to Chat</button>
+        <button id="goToChat" onClick={(e) => { e.preventDefault(); this.props.chat()}}>Go to Chat</button>
         <h2>Current Art Available</h2>
       {console.log('this is display art', {displayArt})}
       {displayArt}
