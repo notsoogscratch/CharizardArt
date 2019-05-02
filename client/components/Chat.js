@@ -25,13 +25,33 @@ const mapDispatchToProps = dispatch => ({
 class Chat extends Component {
     constructor(props) {
         super(props);
-
-        
+   
     }
+
+   componentDidUpdate (){
+        let that = this;
+        this.props.socket.on('message', (data) => {
+        console.log('getting the data from nat and david', data);
+        that.props.sendMessage(data);
+    });
+
+   }
+
+   handleClick () {
+    // e.preventDefault(); 
+    // this.props.socket.on('message', this.props.sendMessage(this.props.currMsg));
+    // this.props.socket.on('message', (data) => {
+    //     console.log('getting the data', data);
+    //     this.props.sendMessage(data);
+    // });
+    this.props.socket.emit('message', this.props.currMsg);
+   }
+
+
 
     componentDidMount(){
         this.props.socket.on('connect', function(msg) {console.log('message ', msg)});
-        this.props.socket.on('message', this.props.sendMessage(this.props.currMsg));
+        // this.props.socket.on('message', this.props.sendMessage(this.props.currMsg));
        
     }
 
@@ -43,10 +63,12 @@ class Chat extends Component {
 
         return (
         <div>
+            <center>
             <ul id="messages">
             {msgs}
             </ul>
-            <input type="text" onChange={(e) => this.props.newCurrMsg(e)} id="textBox" ></input><button onClick={(e) => { e.preventDefault(); this.props.socket.emit('message', this.props.currMsg)}} >Send</button>
+            </center>
+            <input type="text" className="chatInput" onChange={(e) => this.props.newCurrMsg(e)} id="textBox" value={this.props.currMsg}></input><button className="chatSend" onClick={(e) => this.handleClick(e)} >Send</button>
         </div>
         )
         

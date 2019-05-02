@@ -10,11 +10,13 @@ const initialState = {
   needsToSignup: false,
   userCreated: false,
   artRecieved: false,
+ //deleted art:null after pulling upstream master to incorporate aidans changes
+  chartArr: [],
   art: [],
   goToChat: false,
-  currMsg: "What do you have to say?",
+  currMsg: "",
   msgsArr: ['Welcome!'],
-  socket: io(),
+  socket: io('http://192.168.0.108:3000'),
 };
 
 const userReducer = (state = initialState, action) => {
@@ -113,6 +115,16 @@ const userReducer = (state = initialState, action) => {
         ...state,
       };
     
+    case types.GET_STATS:
+    let newChartArr = [];
+    //this is where you'll map over the data and save only the things you want to state;
+      newchartArr.push(action.payload.data, ...state)
+        return {
+          ...state,
+          chartArr: newChartArr,
+
+        };
+
     case types.CHAT:
       newGoToChat = action.payload;
       return {
@@ -129,17 +141,20 @@ const userReducer = (state = initialState, action) => {
       }
 
     case types.MSG_ARR:
-      console.log('in msg arr without value', action.payload)
-      console.log('in msg arr with value', action.payload.value)
-      let newMsg = action.payload;
-      let newMsgArr = state.msgsArr.slice(0);
-      newMsgArr.push(newMsg);
-      let restartMsg = '';
-      return {
+      if (state.currMsg.length > 0){
+        let newMsg = action.payload;
+        let newMsgArr = state.msgsArr.slice(0);
+        newMsgArr.push(newMsg);
+        let restartMsg = '';
+        return {
         ...state,
         currMsg: restartMsg,
         msgsArr: newMsgArr,
-      }
+        }
+    }
+    return {
+      ...state
+    }
 
     default:
       return state;

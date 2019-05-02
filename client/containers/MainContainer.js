@@ -32,7 +32,7 @@ class Main extends Component {
 
     return (
       <div>
-        <h1>Welcome to THE Artful Collective.</h1>
+        <h1 class="vectro"><span class="vectro-body">Welcome to the Artful Collective</span></h1>
       </div>
     )
     

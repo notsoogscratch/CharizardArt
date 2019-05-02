@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+
 const queryController = require('./controllers/queryController.js');
 const bcryptController = require('./controllers/bcryptController.js');
 const cookieController = require('./controllers/cookieController.js');
@@ -20,20 +21,18 @@ const PORT = 3000;
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 // io.listen(server);
-io.sockets.on('connection', (socket) => {
-  let msgArr = []
+io.sockets.on('connect', (socket) => {
   // console.log('this is the socket', socket);
   console.log('connection made');
   socket.send('sup');
   socket.on('message', (data) => {
-    console.log(data);
-    // append data to msgArr
-    // socket.emit("sendMsgArrToClient", msgArr)
+    console.log('in server +++', data)
+    io.emit('message', data)
+    // socket.broadcast.emit('message', data)
   });
-  socket.emit('event', 'sup again or something')
-  //on emit 1st paraemter is what event is called (string) & second paramter is the data being sent
+  
   });
-server.listen(PORT);
+server.listen(PORT, '192.168.0.108');
 
 
 
@@ -54,6 +53,7 @@ app.get('/api/getallart/', testQueryController.getAllArt, (req, res) => {
   if (res.locals.error) res.send(res.locals.error);
   else res.send(res.locals.result.rows);
 });
+
 
 // testing for sign up route
 app.post('/api/testauth/', 
