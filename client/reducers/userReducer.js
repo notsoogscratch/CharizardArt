@@ -108,20 +108,6 @@ const userReducer = (state = initialState, action) => {
     case types.POST_GET_ART_SUCCESS:
       newArtRecieved = true;
       newArt = action.payload.payload
-      // console.log('this is newArt ', newArt)
-      //We actually do the below mapping in component HOME, this code below may be unneccessary 
-      // const newArtParsed = newArt.map(el => {
-      //   return (
-      //     <div className="artUnit">
-      //       <img src={el.image} style={{ height: 100 }}></img>
-      //       <p className="unitTitle">{el.title}</p>
-      //       <p>Artist: {el.artist}</p>
-      //       <p>Description: {el.description}</p>
-      //       <p>Material: {el.material}</p>
-      //       <p>Price: {el.price}</p>
-      //     </div>
-      //   )
-      // })
 
       return {
         ...state,

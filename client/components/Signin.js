@@ -30,9 +30,6 @@ const mapDispatchToProps = dispatch => ({
   signup: () => {
     dispatch(actions.signup())
   },
-  fetchUser: (event) => {
-    dispatch(actions.fetchUser(event))
-  },
   googleLogin: (event) => {
     dispatch(actions.googleLogin(event.target))
   }
@@ -45,22 +42,18 @@ class Signin extends Component {
     this.state = {
       googleSignedIn: false
     }
-    this.click = this.click.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.props.fetchUser();
-  // }
-
-  click() {
+  componentDidMount() {
     Axios.get('/api/current_user/')
       .then(res => {
-        console.log('google id --->', res.data.googleID);
+        // console.log('google id --->', res.data.googleID);
         if (res.data.googleID) {
           this.props.googleLogin(res.data.googleID);
         }
       });
   }
+
 
   render() {
     if ((this.props.verified === true || this.props.googleSignedIn === true) && homeloaded === false) {
@@ -71,8 +64,6 @@ class Signin extends Component {
       signuploaded = true;
       return <Redirect to="/signup"></Redirect>
     }
-
-
 
 
     return (
@@ -86,7 +77,6 @@ class Signin extends Component {
         <br></br>
         <br></br>
         <button onClick={(e) => { e.preventDefault(); this.props.signup() }}>Signup</button>
-        <button onClick={this.click}>Sign In to Google</button>
         <a href="/auth/google">Sign In With GERGLE</a>
       </div >
     )

@@ -78,7 +78,9 @@ app.get(
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google')
+  passport.authenticate('google'), (req, res) => {
+    res.redirect('/home')
+  }
 )
 
 app.get('/api/current_user', (req, res) => {
