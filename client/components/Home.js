@@ -46,19 +46,19 @@ class Home extends Component {
 
   render() {
     const formattedArt = [];
-
-    console.log('ART IN HOME', this.props.art);
-    // for (let i = 0; i < this.props.art.length; i++) {
-    //   formattedArt.push(
-    //     <div className="artUnit">
-    //       <img src={el.image} style={{ height: 800 }}></img>
-    //       <p className="unitTitle"><strong>{el.title}</strong></p>
-    //       <p>Description: {el.description}</p>
-    //       <p>Material: {el.material}</p>
-    //       <p>Price: {el.price}</p>
-    //     </div>
-    //   );
-    // }
+    console.log(this.props.art);
+    for (let i = 0; i < this.props.art.length; i++) {
+      formattedArt.push(
+        <div className="artUnit">
+          <img src={this.props.art[i].image} style={{ height: 800 }}></img>
+          <p className="unitTitle"><strong>{this.props.art[i].title}</strong></p>
+          <p>Description: {this.props.art[i].description}</p>
+          <p>Material: {this.props.art[i].material}</p>
+          <p>Price: {this.props.art[i].price}</p>
+        </div>
+      );
+    }
+    // console.log('ART IN HOME', this.props.art);
 
 
     return (
