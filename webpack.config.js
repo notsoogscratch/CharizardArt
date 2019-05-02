@@ -8,13 +8,14 @@ module.exports = {
   },
   mode: process.env.NODE_ENV,
 
-  devServer : {
+  devServer: {
     publicPath: 'http://localhost:8080/build/',
     compress: true,
     historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000/',
       '/api': 'http://localhost:3000',
+      '/auth/google': 'http://localhost:3000'
     }
   },
   module: {
@@ -34,7 +35,7 @@ module.exports = {
         test: /\.css$/,
         exclude: /(node_modules)/,
         use: ['style-loader', 'css-loader']
-      }, 
+      },
     ]
   }
 }

@@ -14,6 +14,34 @@ export const loginPassword = (password) => ({
   payload: password
 });
 
+export const fetchUserAction = (googleID) => ({
+  type: types.FETCH_USER_ACTION,
+  payload: googleID
+})
+
+
+// for google login
+export const googleLogin = (googleID) => ({
+  type: types.GOOGLE_LOGIN,
+  payload: googleID
+})
+
+
+
+
+export const fetchUser = () => (dispatch) => {
+  console.log('in fetch user action')
+  return function () {
+    //need to find a way to pass dispatch correctly to axios.then()?
+    axios.get('/api/current_user/')
+      .then(res => {
+        console.log('in fetch user axios');
+        return dispatch(fetchUserAction({ type: types.FETCH_USER_ACTION, payload: res.data.googleID }));
+      })
+      .catch(err => console.log(err))
+  }
+}
+
 //This is where we use THUNK. This action creator makes a POST request to the server to verify username and password entered when logging in.
 export const verifyLogin = (username, password) => (dispatch) => {
   console.log('LOGIN SENT TO VERIFYLOGIN')
@@ -45,6 +73,9 @@ export const verifyLogin = (username, password) => (dispatch) => {
       )
     )
 }
+
+
+
 
 //Used above in verifyLogin, utilizing THUNK 
 export const postUsernameAndPasswordSuccess = (res) => ({

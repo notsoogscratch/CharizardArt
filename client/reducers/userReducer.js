@@ -8,7 +8,8 @@ const initialState = {
   needsToSignup: false,
   userCreated: false,
   artRecieved: false,
-  art: null,
+  art: [],
+  googleSignedIn: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -21,8 +22,28 @@ const userReducer = (state = initialState, action) => {
   let newUserCreated;
   let newArtRecieved;
   let newArt;
+  let newGoogleSignedIn;
 
   switch (action.type) {
+    case types.GOOGLE_LOGIN:
+      newGoogleSignedIn = true;
+
+      return {
+        ...state,
+        googleSignedIn: newGoogleSignedIn
+      }
+
+    case types.FETCH_USER_ACTION:
+      console.log('payload', action.payload.value)
+
+      if (action.payload.value) {
+        newGoogleSignedIn = true;
+      }
+      return {
+        ...state,
+        googleSignedIn: newGoogleSignedIn
+      }
+
     //If you watch STATE in Redux devTools, you will see it update everytime a user types a letter
     case types.LOGIN_USERNAME:
       newUsername = action.payload.value;
@@ -78,26 +99,26 @@ const userReducer = (state = initialState, action) => {
 
     case types.POST_GET_ART_SUCCESS:
       newArtRecieved = true;
-      newArt = action.payload.payload;
-      //console.log('this is newArt ', newArt)
+      newArt = action.payload.payload
+      // console.log('this is newArt ', newArt)
       //We actually do the below mapping in component HOME, this code below may be unneccessary 
-      const newArtParsed = newArt.map(el => {
-        return (
-          <div className="artUnit">
-            <img src={el.image} style={{ height: 100 }}></img>
-            <p className="unitTitle">{el.title}</p>
-            <p>Artist: {el.artist}</p>
-            <p>Description: {el.description}</p>
-            <p>Material: {el.material}</p>
-            <p>Price: {el.price}</p>
-          </div>
-        )
-      })
+      // const newArtParsed = newArt.map(el => {
+      //   return (
+      //     <div className="artUnit">
+      //       <img src={el.image} style={{ height: 100 }}></img>
+      //       <p className="unitTitle">{el.title}</p>
+      //       <p>Artist: {el.artist}</p>
+      //       <p>Description: {el.description}</p>
+      //       <p>Material: {el.material}</p>
+      //       <p>Price: {el.price}</p>
+      //     </div>
+      //   )
+      // })
 
       return {
         ...state,
         artRecieved: newArtRecieved,
-        art: newArtParsed,
+        art: newArt,
       };
 
     case types.POST_GET_ART_FAILURE:
