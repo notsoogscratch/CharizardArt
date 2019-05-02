@@ -32,6 +32,7 @@ class Home extends Component {
     .then(res => {
       console.log('this is res in componened did mount ',res)
       return displayArt = res.map(el => {
+        console.log('res', res)
         return (
         <div className="artUnit">
         <img src={el.image} style={{height: 800 }}></img>
@@ -49,7 +50,7 @@ class Home extends Component {
     return (
       <div>
         <h2>Current Art Available</h2>
-      {console.log('this is display art', displayArt)}
+      {console.log('this is display art', {displayArt})}
       {displayArt}
       </div>
     )

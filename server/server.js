@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+
 const queryController = require('./controllers/queryController.js');
 const bcryptController = require('./controllers/bcryptController.js');
 const cookieController = require('./controllers/cookieController.js');
@@ -15,7 +16,6 @@ const testSessionController = require('./controllers/testSessionController.js');
 
 const app = express();
 const PORT = 3000;
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,6 +32,7 @@ app.get('/api/getallart/', testQueryController.getAllArt, (req, res) => {
   if (res.locals.error) res.send(res.locals.error);
   else res.send(res.locals.result.rows);
 });
+
 
 // testing for sign up route
 app.post('/api/testauth/', 

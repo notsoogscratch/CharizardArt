@@ -5,6 +5,7 @@ import Signin from './components/Signin';
 import Main from './containers/MainContainer';
 import Home from './components/Home';
 import Signup from './components/Signup';
+import Chart from './components/Chart'
 import store from './store';
 
 // require('./styles.css'); - we just have not used any styling
@@ -17,6 +18,7 @@ const Root = ({ store }) => (
             <Route path='/signin' component={Signin} />
             <Route path='/home' component={Home} />
             <Route path='/signup' component={Signup} />
+            <Route path='/stats' component={Chart} />
         </Router>
     </Provider>
 )

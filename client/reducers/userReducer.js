@@ -9,6 +9,7 @@ const initialState = {
   userCreated: false,
   artRecieved: false,
   art: null,
+  chartArr: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -104,6 +105,17 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    
+    case types.GET_STATS:
+    let newChartArr = [];
+    //this is where you'll map over the data and save only the things you want to state;
+      newchartArr.push(action.payload.data, ...state)
+        return {
+          ...state,
+          chartArr: newChartArr,
+
+        };
+
 
     default:
       return state;
