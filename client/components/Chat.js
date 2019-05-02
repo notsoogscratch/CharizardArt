@@ -46,7 +46,7 @@ class Chat extends Component {
             <ul id="messages">
             {msgs}
             </ul>
-            <input type="text" onChange={(e) => this.props.newCurrMsg(e)} id="textBox" ></input><button onClick={(e) => { e.preventDefault(); this.props.socket.emit('message')}} >Send</button>
+            <input type="text" onChange={(e) => this.props.newCurrMsg(e)} id="textBox" ></input><button onClick={(e) => { e.preventDefault(); this.props.socket.emit('message', this.props.currMsg)}} >Send</button>
         </div>
         )
         
