@@ -10,14 +10,15 @@ const initialState = {
   needsToSignup: false,
   userCreated: false,
   artRecieved: false,
- //deleted art:null after pulling upstream master to incorporate aidans changes
   chartArr: [],
   goToStats: false,
   art: [],
+  googleSignedIn: false,
   goToChat: false,
   currMsg: "",
   msgsArr: ['Welcome!'],
-  socket: io('http://192.168.0.108:3000'),
+  // socket: io('http://192.168.0.108:3000'),
+  socket: io()
 };
 
 const userReducer = (state = initialState, action) => {
@@ -30,10 +31,19 @@ const userReducer = (state = initialState, action) => {
   let newUserCreated;
   let newArtRecieved;
   let newArt;
+  let newGoogleSignedIn;
   let newGoToChat;
   let newCurrMsg;
 
   switch (action.type) {
+    case types.GOOGLE_LOGIN:
+      newGoogleSignedIn = true;
+
+      return {
+        ...state,
+        googleSignedIn: newGoogleSignedIn
+      }
+
     //If you watch STATE in Redux devTools, you will see it update everytime a user types a letter
     case types.LOGIN_USERNAME:
       newUsername = action.payload.value;
@@ -91,6 +101,7 @@ const userReducer = (state = initialState, action) => {
       newArtRecieved = true;
       newArt = action.payload.payload;
  
+      newArt = action.payload.payload
 
       return {
         ...state,
@@ -102,7 +113,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    
+
     case types.GET_STATS:
     let dataIWant = action.payload.Results.series;
     const xValues = ['Hourly', 'Yearly'];
@@ -131,6 +142,14 @@ const userReducer = (state = initialState, action) => {
         ...state,
         goToStats: newGoToStats,
       }
+      let newChartArr = [];
+      //this is where you'll map over the data and save only the things you want to state;
+      newchartArr.push(action.payload.data, ...state)
+      return {
+        ...state,
+        chartArr: newChartArr,
+
+      };
 
     case types.CHAT:
       newGoToChat = action.payload;
@@ -148,20 +167,20 @@ const userReducer = (state = initialState, action) => {
       }
 
     case types.MSG_ARR:
-      if (state.currMsg.length > 0){
+      if (state.currMsg.length > 0) {
         let newMsg = action.payload;
         let newMsgArr = state.msgsArr.slice(0);
         newMsgArr.push(newMsg);
         let restartMsg = '';
         return {
-        ...state,
-        currMsg: restartMsg,
-        msgsArr: newMsgArr,
+          ...state,
+          currMsg: restartMsg,
+          msgsArr: newMsgArr,
         }
-    }
-    return {
-      ...state
-    }
+      }
+      return {
+        ...state
+      }
 
     default:
       return state;

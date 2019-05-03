@@ -31,10 +31,8 @@ class Home extends Component {
   constructor(props) {
     super(props)
   }
-  
+
   componentDidMount() {
-    // console.log('in didmount')
-    // this.props.getArt();
     fetch('http://localhost:3000/api/getallart')
     .then(res => {
       return res.json()
@@ -54,9 +52,27 @@ class Home extends Component {
         )
     })
   })
+      .then(res => {
+        return res.json()
+      })
+      .then(res => {
+        console.log('this is res in componened did mount ', res)
+        return displayArt = res.map(el => {
+          console.log('res', res)
+          return (
+            <div className="artUnit">
+              <img src={el.image} style={{ height: 800 }}></img>
+              <p className="unitTitle"><strong>{el.title}</strong></p>
+              <p>Description: {el.description}</p>
+              <p>Material: {el.material}</p>
+              <p>Price: {el.price}</p>
+            </div>
+          )
+        })
+      })
     this.props.getArt();
-}
-  
+  }
+
   render() {
     if (this.props.goToChat === true && goChat === false) {
       goChat = true;
@@ -76,13 +92,14 @@ class Home extends Component {
         <button className="stats" onClick={(e) => { e.preventDefault(); this.props.stats()}}>Go to Stats</button>
 
         <button id="goToChat" onClick={(e) => { e.preventDefault(); this.props.chat()}}>Go to Chat</button>
+        <button id="goToChat" onClick={(e) => { e.preventDefault(); this.props.chat() }}>Go to Chat</button>
         <h2>Current Art Available</h2>
-      {console.log('this is display art', {displayArt})}
-      {displayArt}
+        {console.log('this is display art', { displayArt })}
+        {displayArt}
         {artwork}
-      </div>
+      </div >
     )
   }
 }
-  
- export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

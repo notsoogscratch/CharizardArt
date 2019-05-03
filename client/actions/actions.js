@@ -14,6 +14,28 @@ export const loginPassword = (password) => ({
   payload: password
 });
 
+
+
+// for google login
+export const googleLogin = (googleID) => ({
+  type: types.GOOGLE_LOGIN,
+  payload: googleID
+})
+
+export const didGoogleWork = () => dispatch => {
+  // console.log('in google work thing');
+
+  axios.get('/api/current_user/')
+    .then(res => {
+      // console.log('google id --->', res.data.googleID);
+      console.log('google id --->', res.data.googleID);
+      // if (res.data.googleID) {
+      //   this.props.googleLogin(res.data.googleID);
+      // }
+      return dispatch(googleLogin({ type: types.GOOGLE_LOGIN, payload: res.data.googleID }))
+    });
+}
+
 //This is where we use THUNK. This action creator makes a POST request to the server to verify username and password entered when logging in.
 export const verifyLogin = (username, password) => (dispatch) => {
   console.log('LOGIN SENT TO VERIFYLOGIN')
@@ -46,6 +68,9 @@ export const verifyLogin = (username, password) => (dispatch) => {
     )
 }
 
+
+
+
 //Used above in verifyLogin, utilizing THUNK 
 export const postUsernameAndPasswordSuccess = (res) => ({
   type: types.POST_USERNAME_AND_PASSWORD_SUCCESS,
@@ -65,7 +90,7 @@ export const signup = () => ({
 
 //Using THUNK. Once a user enters a username and password, and clicks button Create Account (go to component Signup), this action creator sends a POST request to server. 
 export const createuser = (username, password) => (dispatch) => {
-  console.log('in createuser function about to post request')
+  // console.log('in createuser function about to post request')
   axios({
     method: 'post',
     url: '/api/testauth', //test api route
@@ -106,7 +131,7 @@ export const postCreateUserFailure = (err) => ({
 
 //After successfully logging in or signing up, react router routes to '/home' (go to component Home), we utilize THUNK to make a GET the artwork data stored in the database
 export const getArt = () => (dispatch) => {
-  console.log('in getArt function about to get request')
+  // console.log('in getArt function about to get request')
   axios({
     method: 'get',
     url: '/api/getallart' //api test route
