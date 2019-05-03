@@ -10,8 +10,8 @@ const initialState = {
   needsToSignup: false,
   userCreated: false,
   artRecieved: false,
-  art: null,
   chartArr: [],
+  goToStats: false,
   art: [],
   goToChat: false,
   currMsg: "What do you have to say?",
@@ -89,20 +89,7 @@ const userReducer = (state = initialState, action) => {
     case types.POST_GET_ART_SUCCESS:
       newArtRecieved = true;
       newArt = action.payload.payload;
-      //console.log('this is newArt ', newArt)
-      //We actually do the below mapping in component HOME, this code below may be unneccessary 
-      // const newArtParsed = newArt.map(el => {
-      //   return (
-      //     <div className="artUnit">
-      //       <img src={el.image} style={{ height: 100 }}></img>
-      //       <p className="unitTitle">{el.title}</p>
-      //       <p>Artist: {el.artist}</p>
-      //       <p>Description: {el.description}</p>
-      //       <p>Material: {el.material}</p>
-      //       <p>Price: {el.price}</p>
-      //     </div>
-      //   )
-      // })
+ 
 
       return {
         ...state,
@@ -116,14 +103,33 @@ const userReducer = (state = initialState, action) => {
       };
     
     case types.GET_STATS:
-    let newChartArr = [];
-    //this is where you'll map over the data and save only the things you want to state;
-      newchartArr.push(action.payload.data, ...state)
+    let dataIWant = action.payload.Results.series;
+    const xValues = ['Hourly', 'Yearly'];
+    const yValues = dataIWant.map(el => {
+      // console.log(el.data, 'el.data')
+      return el.data[0].value
+    })
+    // console.log(yValues, 'newArr')
+
+    const newArr = [];
+
+    xValues.forEach((x, i) => newArr.push({
+      [x]: yValues[i]
+    }))
+
+    console.log(newArr, 'newArr')
+
         return {
           ...state,
-          chartArr: newChartArr,
+          chartArr: newArr,
 
         };
+    case types.STATS:
+      let newGoToStats = action.payload;
+      return {
+        ...state,
+        goToStats: newGoToStats,
+      }
 
     case types.CHAT:
       newGoToChat = action.payload;

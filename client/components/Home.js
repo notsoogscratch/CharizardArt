@@ -11,6 +11,7 @@ const mapStateToProps = store => ({
   error: store.userTraffic.error,
   art: store.userTraffic.art,
   goToChat: store.userTraffic.goToChat,
+  goToStats: store.userTraffic.goToStats,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,6 +20,9 @@ const mapDispatchToProps = dispatch => ({
   },
   chat: () => {
     dispatch(actions.chat())
+  },
+  stats: () => {
+    dispatch(actions.stats())
   }
 });
 
@@ -36,7 +40,7 @@ class Home extends Component {
       return res.json()
     })
     .then(res => {
-      console.log('this is res in componened did mount ',res)
+      console.log('this is res in component did mount ',res)
       return displayArt = res.map(el => {
         console.log('res', res)
         return (
@@ -58,6 +62,9 @@ class Home extends Component {
       goChat = true;
       return <Redirect to="/chat"></Redirect>
     }
+      if(this.props.goToStats === true) {
+        return <Redirect to="/stats"></Redirect>
+      }
 
     const artwork = this.props.art.map(el =>
       <Artwork art={el} ></Artwork>
@@ -66,6 +73,8 @@ class Home extends Component {
     return (
       <div>
         <button className="chat" onClick={(e) => { e.preventDefault(); this.props.chat()}}>Go to Chat</button>
+        <button className="stats" onClick={(e) => { e.preventDefault(); this.props.stats()}}>Go to Stats</button>
+
         <h2>Current Art Available</h2>
       {console.log('this is display art', {displayArt})}
       {displayArt}

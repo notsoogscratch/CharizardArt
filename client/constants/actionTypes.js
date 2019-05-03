@@ -12,6 +12,7 @@ export const POST_GET_ART_SUCCESS = 'POST_GET_ART_SUCCESS';
 export const POST_GET_ART_FAILURE = 'POST_GET_ART_FAILURE';
 
 export const GET_STATS = 'GET_STATS';
+export const STATS = 'STATS'
 export const CHAT = 'CHAT';
 export const MSG_ARR = 'MSG_ARR';
 export const CURR_MSG = 'CURR_MSG';
