@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import { Redirect } from 'react-router-dom';
+import {XYPlot, XAxis, YAxis, VerticalBarSeries, HorizontalGridLines, LineSeries} from 'react-vis';
+// import '../../node_modules/react-vis/dist/style.css';
 
+console.log(actions, 'kdkdjdkdkddj')
 const mapStateToProps = store => ({
-  error: store.userTraffic.error,
+  chartArr: store.userTraffic.chartArr,
 
 })
 
 const mapDispatchToProps = dispatch => ({
   getStats: () => {
+    //console.log(getStats, 'here ')
     dispatch(actions.getStats())
   }
 })
@@ -19,9 +23,28 @@ class Chart extends Component {
     super(props)
   }
   componentDidMount(){
-    getStats();
-   
+    this.props.getStats();
+  
   }
+
+  render(){
+    const data = this.props.chartArr;
+  
+      return (
+        <XYPlot 
+           width={300}
+           height={300} >
+          
+            <VerticalBarSeries
+                data={data}
+            />
+        </XYPlot>
+    );
+  }
+
+
+
+
 }
 
 

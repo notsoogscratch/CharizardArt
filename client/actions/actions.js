@@ -171,8 +171,9 @@ export const postGetArtFailure = (err) => ({
 
 
 export const fetchStats = (stats) => {
+  console.log('stats', stats)
   return {
-    type: GET_STATS,
+    type: types.GET_STATS,
     payload: stats,
   }
 };
@@ -183,7 +184,7 @@ export const getStats = () => {
       url: 'https://api.bls.gov/publicAPI/v2/timeseries/data',
       data: {
       "seriesid": ["OEUN000000071150027101303", "OEUN000000071150027101304"],
-      "startyear": "2010",
+      "startyear": "2018",
       "endyear": "2018",
       "catalog": true,
       "calculations": true,
@@ -192,7 +193,7 @@ export const getStats = () => {
       }
     })
     .then(response => {
-      console.log(response)
+      console.log(response.data, 'hereeeeeee')
       dispatch(fetchStats(response.data))
     })
     .catch(error => {
@@ -200,6 +201,10 @@ export const getStats = () => {
     })
 } 
 }
+export const stats = () => ({
+  type: types.STATS,
+  payload: true
+});
 //This action creator is deployed when a user clicks the button chat (go to component Chat)
 export const chat = () => ({
   type: types.CHAT,

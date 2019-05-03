@@ -11,6 +11,7 @@ const initialState = {
   userCreated: false,
   artRecieved: false,
   chartArr: [],
+  goToStats: false,
   art: [],
   googleSignedIn: false,
   goToChat: false,
@@ -98,6 +99,8 @@ const userReducer = (state = initialState, action) => {
 
     case types.POST_GET_ART_SUCCESS:
       newArtRecieved = true;
+      newArt = action.payload.payload;
+ 
       newArt = action.payload.payload
 
       return {
@@ -112,6 +115,33 @@ const userReducer = (state = initialState, action) => {
       };
 
     case types.GET_STATS:
+    let dataIWant = action.payload.Results.series;
+    const xValues = ['Hourly', 'Yearly'];
+    const yValues = dataIWant.map(el => {
+      // console.log(el.data, 'el.data')
+      return el.data[0].value
+    })
+    // console.log(yValues, 'newArr')
+
+    const newArr = [];
+
+    xValues.forEach((x, i) => newArr.push({
+      [x]: yValues[i]
+    }))
+
+    console.log(newArr, 'newArr')
+
+        return {
+          ...state,
+          chartArr: newArr,
+
+        };
+    case types.STATS:
+      let newGoToStats = action.payload;
+      return {
+        ...state,
+        goToStats: newGoToStats,
+      }
       let newChartArr = [];
       //this is where you'll map over the data and save only the things you want to state;
       newchartArr.push(action.payload.data, ...state)
