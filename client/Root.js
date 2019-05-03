@@ -5,6 +5,7 @@ import Signin from './components/Signin';
 import Main from './containers/MainContainer';
 import Home from './components/Home';
 import Signup from './components/Signup';
+import Chart from './components/Chart'
 import Chat from './components/Chat'
 import store from './store';
 
@@ -18,6 +19,7 @@ const Root = ({ store }) => (
             <Route path='/signin' component={Signin} />
             <Route path='/home' component={Home} />
             <Route path='/signup' component={Signup} />
+            <Route path='/stats' component={Chart} />
             <Route path='/chat' component={Chat} />
         </Router>
     </Provider>

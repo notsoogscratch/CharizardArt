@@ -67,18 +67,20 @@ class Signin extends Component {
 
 
     return (
-      <div>
-        <h3>Please Login</h3>
-        <label htmlFor="loginUsername">Username</label>
-        <input type="text" onChange={(e) => this.props.loginUsername(e)} id="username" placeholder="username"></input>
-        <label htmlFor="loginPassword">Password</label>
-        <input type="password" onChange={(e) => this.props.loginPassword(e)} id="password" placeholder="password"></input>
-        <button onClick={(e) => { e.preventDefault(); this.props.verifyLogin(this.props.username, this.props.password) }}>Login</button>
-        <br></br>
-        <br></br>
-        <button onClick={(e) => { e.preventDefault(); this.props.signup() }}>Signup</button>
-        <a href="/auth/google">Sign In With GERGLE</a>
-      </div >
+      <center>
+        <div className="signInBunch">
+          <h3 className="pleaseLogIn">Please Login</h3>
+          <label className="loginUName" htmlFor="loginUsername">Username</label>
+          <input className="inputLoginUName" type="text" onChange={(e) => this.props.loginUsername(e)} id="username" placeholder="username"></input>
+          <label className="loginPassword" htmlFor="loginPassword">Password</label>
+          <input className="inputLoginPassword" type="password" onChange={(e) => this.props.loginPassword(e)} id="password" placeholder="password"></input>
+          <button onClick={(e) => { e.preventDefault(); this.props.verifyLogin(this.props.username, this.props.password) }}>Login</button>
+          <br></br>
+          <br></br>
+          <button onClick={(e) => { e.preventDefault(); this.props.signup() }}>Signup</button>
+          <button><a href="/auth/google">Sign In With GORGLE</a></button>
+        </div>
+      </center>
     )
   }
 }

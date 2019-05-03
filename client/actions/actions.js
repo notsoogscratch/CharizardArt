@@ -169,6 +169,37 @@ export const postGetArtFailure = (err) => ({
   payload: err
 });
 
+
+export const fetchStats = (stats) => {
+  return {
+    type: GET_STATS,
+    payload: stats,
+  }
+};
+export const getStats = () => {
+  return (dispatch) => {
+    axios({
+      method: 'post',
+      url: 'https://api.bls.gov/publicAPI/v2/timeseries/data',
+      data: {
+      "seriesid": ["OEUN000000071150027101303", "OEUN000000071150027101304"],
+      "startyear": "2010",
+      "endyear": "2018",
+      "catalog": true,
+      "calculations": true,
+      "annualaverage": true,
+      "registrationkey": "0503dd21eec243f28da077b0d011d2e5"
+      }
+    })
+    .then(response => {
+      console.log(response)
+      dispatch(fetchStats(response.data))
+    })
+    .catch(error => {
+      throw(error);
+    })
+} 
+}
 //This action creator is deployed when a user clicks the button chat (go to component Chat)
 export const chat = () => ({
   type: types.CHAT,

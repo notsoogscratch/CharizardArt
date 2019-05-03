@@ -29,6 +29,25 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    fetch('http://localhost:3000/api/getallart')
+      .then(res => {
+        return res.json()
+      })
+      .then(res => {
+        console.log('this is res in componened did mount ', res)
+        return displayArt = res.map(el => {
+          console.log('res', res)
+          return (
+            <div className="artUnit">
+              <img src={el.image} style={{ height: 800 }}></img>
+              <p className="unitTitle"><strong>{el.title}</strong></p>
+              <p>Description: {el.description}</p>
+              <p>Material: {el.material}</p>
+              <p>Price: {el.price}</p>
+            </div>
+          )
+        })
+      })
     this.props.getArt();
   }
 
@@ -44,10 +63,12 @@ class Home extends Component {
 
     return (
       <div>
-        <button className="chat" onClick={(e) => { e.preventDefault(); this.props.chat() }}>Go to Chat</button>
+        <button id="goToChat" onClick={(e) => { e.preventDefault(); this.props.chat() }}>Go to Chat</button>
         <h2>Current Art Available</h2>
+        {console.log('this is display art', { displayArt })}
+        {displayArt}
         {artwork}
-      </div>
+      </div >
     )
   }
 }

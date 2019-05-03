@@ -1,3 +1,38 @@
+
+  .vectro {
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.1px #f1f1f1;
+    font-family: 'Righteous', cursive;
+    font-size: 80px;
+    margin: 150px 0 50px 0;
+  }
+  
+  .vectro:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*-webkit-animation:vectro_effect 0.067s infinite;*/
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 2px);
+  }
+  
+  
+  
+  .windows .vectro {
+    -webkit-text-stroke: 4px #f1f1f1;
+  }
+  
+  .vectro-body {
+    
+    -webkit-background-clip: text;
+    background-image: -webkit-linear-gradient(#C3BFB4 0%, #FDFCFA 50%, #E8E7E5 51%, #c63771 52%, #E8E9DB 100%);
+    -webkit-filter: drop-shadow(5px 5px 15px #c63771);
+  }
+
+
 .Chat { 
     margin: 0; 
     padding: 0; 
@@ -5,30 +40,41 @@
 
 body { 
     font: 13px Helvetica, Arial; 
+    background: url(https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/conversation-with-jackson-pollock-no41-george-sanen.jpg) -80px -80px;
+    min-height: 100%;
+    text-align:center
 }
 
-form { 
-    background: #000; 
-    padding: 3px; 
-    position: fixed; 
-    bottom: 0; 
-    width: 100%; 
-}
+html {
+    height: 100%;
+  }
 
-form input { 
-    border: 0; 
-    padding: 10px; 
-    width: 80%; 
-    margin-right: .5%; 
-}
 
-form button { 
-    width: 9%; 
-    background: rgb(130, 224, 255); 
+.chatSend { 
+    width: 13%; 
+    background: pink(130, 224, 255); 
     border: none; 
     padding: 10px; 
+    position:fixed;
+    bottom:0;
+    right:0;
 }
-    
+
+.chatSend:hover{
+    background: #c63771;
+}
+
+.chatInput {
+    border: 2px solid #c63771;
+    padding: 10px; 
+    width: 85%; 
+    margin-right: .5%; 
+    position:fixed;
+    bottom:0;
+    left:0;
+}
+
+
 #messages { 
     list-style-type: none; 
     margin: 0; 
@@ -43,14 +89,77 @@ form button {
     background: #eee; 
 }
 
-button.chat {
+button {
     padding: 10px; 
     border: 1px solid black;
-    background-color: pink; 
-    opacity: 0.7;
-    width: 10%
+    border-radius: 3px;
+    background-color: pink;
+    width: 10%;
+    margin-left: 15px;
+    font-size: 17px
 }
 
-button.chat:hover {
+button:hover {
+    background-color: #c63771;
+}
+
+button#goToChat {
+    padding: 20px 40px; 
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: pink;
+    margin-left: 15px;
+    width: 40%;
+    font-size: 30px
+}
+
+button#goToChat:hover {
+    background-color: #c63771;
+}
+
+.signInBunch{
+    padding-bottom: 20px;
+    width: 70%;
+    background: white;
+    border: 1px solid white;
+    border-radius: 10px;
+    opacity: 0.85
+}
+
+.signInBunch:hover{
     opacity: 1
+}
+
+.pleaseLogIn {
+    font-size: 45px;
+}
+
+.loginUName{
+    font-size: 20px;
+    margin: 5px;
+    border-radius: 3px
+}
+
+.loginPassword{
+    font-size: 20px;
+    margin: 5px
+}
+
+
+.inputLoginUName{
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.inputLoginPassword{
+    height: 30px;
+    border: 2px solid black;
+    margin: 5px;
+}
+
+ul {
+    width: 70%;
+    font-size: 20px
 }
